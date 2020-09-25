@@ -1,9 +1,11 @@
 from fastapi import FastAPI
 
-from app.api import root, notes
 from app.db import engine, database
 
-from app.api.models import metadata
+from app.api.models.models import metadata
+
+from app.api.routes import root
+from app.api.routes import notes
 
 metadata.create_all(engine)
 

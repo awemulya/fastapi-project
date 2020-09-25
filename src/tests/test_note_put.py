@@ -1,6 +1,7 @@
 import pytest
-from app.api import crud
 import json
+
+from app.api.cruds import crud
 
 
 def test_update_note(test_app, monkeypatch):

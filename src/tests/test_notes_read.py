@@ -1,4 +1,4 @@
-from app.api import crud
+from app.api.cruds import crud
 
 
 def test_read_all_notes(test_app, monkeypatch):

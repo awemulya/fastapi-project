@@ -1,4 +1,4 @@
-from app.api import crud
+from app.api.cruds import crud
 
 
 def test_remove_note(test_app, monkeypatch):
