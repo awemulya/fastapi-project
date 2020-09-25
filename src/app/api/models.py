@@ -1,10 +1,11 @@
-from pydantic import BaseModel, Field
+from sqlalchemy import MetaData, Table, Integer, String, DateTime, func, Column
 
-
-class NoteSchema(BaseModel):
-    title: str = Field(..., min_length=3, max_length=50)
-    description: str = Field(..., min_length=3, max_length=50)
-
-
-class NoteDB(NoteSchema):
-    id: int
+metadata = MetaData()
+notes = Table(
+    "notes",
+    metadata,
+    Column("id", Integer, primary_key=True),
+    Column("title", String(50)),
+    Column("description", String(50)),
+    Column("created_date", DateTime, default=func.now(), nullable=False),
+)
