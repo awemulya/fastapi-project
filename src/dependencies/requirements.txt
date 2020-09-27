@@ -8,5 +8,8 @@ uvicorn==0.11.1
 pytest==5.3.2
 requests==2.22.0
 
-passlib==1.7.2
-python-jose==3.2.0
+passlib[bcrypt]
+python-jose[cryptography]==3.2.0
+
+email-validator
+python-multipart

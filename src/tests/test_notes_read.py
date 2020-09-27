@@ -1,4 +1,4 @@
-from app.api.cruds import crud
+from app.api.cruds import notes
 
 
 def test_read_all_notes(test_app, monkeypatch):
@@ -10,7 +10,7 @@ def test_read_all_notes(test_app, monkeypatch):
     async def mock_get_all():
         return test_data
 
-    monkeypatch.setattr(crud, "get_all", mock_get_all)
+    monkeypatch.setattr(notes, "get_all", mock_get_all)
 
     response = test_app.get("/notes/")
     assert response.status_code == 200

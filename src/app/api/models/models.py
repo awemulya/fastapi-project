@@ -9,3 +9,14 @@ notes = Table(
     Column("description", String(50)),
     Column("created_date", DateTime, default=func.now(), nullable=False),
 )
+
+
+fake_users_db = {
+    "johndoe": {
+        "username": "johndoe",
+        "full_name": "John Doe",
+        "email": "johndoe@example.com",
+        "hashed_password": "$2b$12$MKEr/nYM83CUD0GbdD0Qde9asArbSMvlpz85jwHnBnX5dqE3XWGjG",
+        "disabled": False,
+    }
+}

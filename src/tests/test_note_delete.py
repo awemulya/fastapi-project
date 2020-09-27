@@ -1,4 +1,4 @@
-from app.api.cruds import crud
+from app.api.cruds import notes
 
 
 def test_remove_note(test_app, monkeypatch):
@@ -7,12 +7,12 @@ def test_remove_note(test_app, monkeypatch):
     async def mock_get(id):
         return test_data
 
-    monkeypatch.setattr(crud, "get", mock_get)
+    monkeypatch.setattr(notes, "get", mock_get)
 
     async def mock_delete(id):
         return id
 
-    monkeypatch.setattr(crud, "delete", mock_delete)
+    monkeypatch.setattr(notes, "delete", mock_delete)
 
     response = test_app.delete("/notes/1/")
     assert response.status_code == 200
@@ -23,7 +23,7 @@ def test_remove_note_incorrect_id(test_app, monkeypatch):
     async def mock_get(id):
         return None
 
-    monkeypatch.setattr(crud, "get", mock_get)
+    monkeypatch.setattr(notes, "get", mock_get)
 
     response = test_app.delete("/notes/999/")
     assert response.status_code == 404

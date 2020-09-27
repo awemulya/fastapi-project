@@ -1,6 +1,6 @@
 import json
 
-from app.api.cruds import crud
+from app.api.cruds import notes
 
 
 def test_create_note(test_app, monkeypatch):
@@ -12,7 +12,7 @@ def test_create_note(test_app, monkeypatch):
     async def mock_post(payload):
         return 1
 
-    monkeypatch.setattr(crud, "post", mock_post)
+    monkeypatch.setattr(notes, "post", mock_post)
 
     response = test_app.post("/notes/", data=json.dumps(test_request_payload),)
 
