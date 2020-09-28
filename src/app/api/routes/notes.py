@@ -6,6 +6,7 @@ from app.api.cruds import notes
 from app.api.schemas.note import NoteDB, NoteSchema
 
 from app.api.utils.notes import title_dict, id_dict, order_by_dict
+from fastapi.params import Param
 
 router = APIRouter()
 
@@ -32,8 +33,8 @@ async def read_note(id: int = Path(..., gt = 0),):
 
 @router.get("/", response_model=List[NoteDB])
 async def read_all_notes(
-        page: int = 0,
-        page_size: int = 10,
+        page: int = Param(default = 0, gte = 0),
+        page_size: int = Param(default = 10, gt = 0),
         title: Optional[list] = Depends(title_dict),
         id: Optional[list] = Depends(id_dict),
         order_by: Optional[list] = Depends(order_by_dict)):
