@@ -1,9 +1,11 @@
-from typing import List
-from fastapi import APIRouter, HTTPException, Path
+from typing import List, Optional
+from fastapi import APIRouter, HTTPException, Path, Depends
 
 from app.api.cruds import notes
 
 from app.api.schemas.note import NoteDB, NoteSchema
+
+from app.api.utils.notes import title_dict, id_dict, order_by_dict
 
 router = APIRouter()
 
@@ -29,8 +31,13 @@ async def read_note(id: int = Path(..., gt = 0),):
 
 
 @router.get("/", response_model=List[NoteDB])
-async def read_all_notes():
-    return await notes.get_all()
+async def read_all_notes(
+        page: int = 0,
+        page_size: int = 10,
+        title: Optional[list] = Depends(title_dict),
+        id: Optional[list] = Depends(id_dict),
+        order_by: Optional[list] = Depends(order_by_dict)):
+    return await notes.get_all(page, page_size, title, id, order_by)
 
 
 @router.put("/{id}/", response_model=NoteDB)
