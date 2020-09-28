@@ -1,12 +1,11 @@
 from typing import List, Optional
-from fastapi import APIRouter, HTTPException, Path, Depends
+from fastapi import APIRouter, HTTPException, Path, Depends, Query
 
 from app.api.cruds import notes
 
 from app.api.schemas.note import NoteDB, NoteSchema
 
 from app.api.utils.notes import title_dict, id_dict, order_by_dict
-from fastapi.params import Param
 
 router = APIRouter()
 
@@ -33,8 +32,8 @@ async def read_note(id: int = Path(..., gt = 0),):
 
 @router.get("/", response_model=List[NoteDB])
 async def read_all_notes(
-        page: int = Param(default = 0, gte = 0),
-        page_size: int = Param(default = 10, gt = 0),
+        page: int = Query(default = 0, gte=0),
+        page_size: int = Query(default=10, gt=0),
         title: Optional[list] = Depends(title_dict),
         id: Optional[list] = Depends(id_dict),
         order_by: Optional[list] = Depends(order_by_dict)):
@@ -42,7 +41,7 @@ async def read_all_notes(
 
 
 @router.put("/{id}/", response_model=NoteDB)
-async def update_note(payload: NoteSchema, id: int = Path(..., gt = 0),):
+async def update_note(payload: NoteSchema, id: int = Path(..., gt=0),):
     note = await notes.get(id)
     if not note:
         raise HTTPException(status_code=404, detail="Note not found")
@@ -58,7 +57,7 @@ async def update_note(payload: NoteSchema, id: int = Path(..., gt = 0),):
 
 
 @router.delete("/{id}/", response_model=NoteDB)
-async def delete_note(id: int = Path(..., gt = 0)):
+async def delete_note(id: int = Path(..., gt=0)):
     note = await notes.get(id)
     if not note:
         raise HTTPException(status_code=404, detail="Note not found")
