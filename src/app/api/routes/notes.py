@@ -32,9 +32,9 @@ async def read_note(id: int = Path(..., gt = 0),):
 
 @router.get("/", response_model=List[NoteDB])
 async def read_all_notes(
-        page: int = Query(default = 0, gte=0),
+        page: int = Query(default=1, gt=0),
         page_size: int = Query(default=10, gt=0),
-        title: Optional[list] = Depends(title_dict),
+        title: Optional[str] = Query(default=None),
         id: Optional[list] = Depends(id_dict),
         order_by: Optional[list] = Depends(order_by_dict)):
     return await notes.get_all(page, page_size, title, id, order_by)

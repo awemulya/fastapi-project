@@ -1,8 +1,7 @@
 from app.db import database
-
 from app.api.schemas.note import NoteSchema
-
 from app.api.models.models import notes
+from app.api.utils.notes import build_query_form_params
 
 
 async def post(payload: NoteSchema):
@@ -17,8 +16,10 @@ async def get(id: int):
 
 
 async def get_all(
-        page: int, page_size: int, title: list, id: list, order_by: list):
-    query = notes.select()
+        page: int, page_size: int, title: str, id: list, order_by: list):
+    offset = (page - 1) * page_size
+    query = build_query_form_params(title, id, order_by)
+    query = query.limit(page_size).offset(offset)
     return await database.fetch_all(query=query)
 
 

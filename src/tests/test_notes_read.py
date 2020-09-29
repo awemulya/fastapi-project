@@ -38,9 +38,10 @@ def test_read_all_notes_invalid_page_size(test_app, monkeypatch):
     monkeypatch.setattr(notes, "get_all", mock_get_all)
     params = dict(page=1,
                   page_size=0,
-                  title_filters=json.dumps({"title": "aa"}),
-                  id_filters=json.dumps({"id": 1}),
-                  order_by_filters=json.dumps({"title": "ascending"}),
+                  title_filters="foo",
+                  id_filters=json.dumps(
+                      {"in": "1,2,3,4,5", "lte": 100, "gte": 1}),
+                  order_by_filters=json.dumps({"asc": "id,title"}),
                   )
     response = test_app.get("/notes/", params=params)
     assert response.status_code == 422
