@@ -13,3 +13,6 @@ python-jose[cryptography]==3.2.0
 
 email-validator
 python-multipart
+
+alembic==1.4.3
+
