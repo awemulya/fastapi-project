@@ -10,6 +10,14 @@ notes = Table(
     Column("created_date", DateTime, default=func.now(), nullable=False),
 )
 
+users = Table(
+    "users",
+    metadata,
+    Column("id", Integer, primary_key=True),
+    Column("name", String(50)),
+    Column("username", String(50)),
+    Column("created_date", DateTime, default=func.now(), nullable=False),
+)
 
 fake_users_db = {
     "johndoe": {
