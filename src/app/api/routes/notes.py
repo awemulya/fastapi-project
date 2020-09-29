@@ -37,6 +37,15 @@ async def read_all_notes(
         title: Optional[str] = Query(default=None),
         id: Optional[list] = Depends(id_dict),
         order_by: Optional[list] = Depends(order_by_dict)):
+    """
+    Get list of notes with filter options
+    :param page: current page
+    :param page_size: no of notes per page
+    :param title: get notes like given title
+    :param id: get notes less greater or equal to id
+    :param order_by: ascending or descending ordering by id and or title
+    :return:
+    """
     return await notes.get_all(page, page_size, title, id, order_by)
 
 
